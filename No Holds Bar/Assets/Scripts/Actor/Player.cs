@@ -8,34 +8,48 @@ namespace Actor
 
 public class Player : Brawler
 {
-    private Rigidbody body; 
-
-    public float walk_force = 1;
-    public float jump_force = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        body = GetComponent<Rigidbody>();
-    }
 
-    void Walk(Vector2 dir)
-    {
-        body.AddForce(dir * walk_force, ForceMode.Force);
-    }
-
-    void Jump()
-    {
-        if (Math.Abs(body.velocity.y) > 0.001)
-        {
-            body.AddForce(new Vector3(0, jump_force, 0));            
-        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Vector2 dir = new Vector2(0, 0);
+        if (Input.GetKey("w"))
+        {
+            dir += new Vector2(0, 1);
+        }
+
+        if (Input.GetKey("s"))
+        {
+            dir += new Vector2(0, -1);
+        }
+
+        if (Input.GetKey("a"))
+        {
+            dir += new Vector2(1, 0);
+        }
+
+        if (Input.GetKey("d"))
+        {
+            dir += new Vector2(-1, 0);
+        }
+
+        if (dir.magnitude > 0.0001)
+        {
+            Debug.Log(dir);
+        }
+
+        this.GetComponent<Actor.Brawler>().Walk(dir.normalized);
+
+        if (Input.GetKey("space"))
+        {
+            this.GetComponent<Actor.Brawler>().Jump();
+        }        
     }
 }
 
