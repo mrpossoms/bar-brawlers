@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ namespace Actor
 
 public class Player : Brawler
 {
-    private RigidBody body; 
+    private Rigidbody body; 
 
     public float walk_force = 1;
     public float jump_force = 1;
@@ -25,7 +26,10 @@ public class Player : Brawler
 
     void Jump()
     {
-
+        if (Math.Abs(body.velocity.y) > 0.001)
+        {
+            body.AddForce(new Vector3(0, jump_force, 0));            
+        }
     }
 
     // Update is called once per frame
