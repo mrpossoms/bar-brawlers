@@ -23,7 +23,11 @@ public class Player : MonoBehaviour
             float dx = Input.GetAxis("Mouse X");
             float dy = Input.GetAxis("Mouse Y");
 
-            transform.eulerAngles = transform.eulerAngles - (new Vector3(dy, -dx, 0));
+            Rigidbody parent_body = gameObject.GetComponentInParent(typeof(Rigidbody)) as Rigidbody;
+            if (null != parent_body)
+            {
+                parent_body.transform.eulerAngles -= (new Vector3(dy, -dx, 0));
+            }
         }
     }
 }

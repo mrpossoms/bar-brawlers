@@ -9,9 +9,11 @@ namespace Actor
 public class Brawler : MonoBehaviour
 {
     protected Rigidbody body; 
+    private float cool_down_jump = 0;
 
-    public float walk_force = 100;
-    public float jump_force = 1;
+    public float seconds_between_jumps = 0.1f;
+    public float walk_force = 1000;
+    public float jump_force = 1500;
 
     // Start is called before the first frame update
     void Start()
@@ -21,28 +23,25 @@ public class Brawler : MonoBehaviour
 
     public void Walk(Vector2 dir)
     {
-        Debug.Log("Walking: " + dir);
-
-        float yaw = this.gameObject.transform.eulerAngles.x;//body.transform.eulerAngles.x;
-        Vector3 force = Quaternion.AngleAxis(yaw, Vector3.up) * (new Vector3(dir.x, 0, dir.y) * 100);
-        Debug.Log("Walking force: " + force);
-
-        GetComponent<Rigidbody>().AddForce(force, ForceMode.Force);
+        float yaw = this.gameObject.transform.eulerAngles.y;//body.transform.eulerAngles.x;
+        Vector3 force = Quaternion.AngleAxis(yaw, Vector3.up) * (new Vector3(dir.x, 0, dir.y) * walk_force);
+     
+        body.AddForce(force, ForceMode.Force);
     }
 
     public void Jump()
     {
-        body = GetComponent<Rigidbody>();
-        if (Math.Abs(body.velocity.y) > 0.001)
+        if (Math.Abs(body.velocity.y) < 0.0001 && cool_down_jump <= 0)
         {
-            //body.AddForce(new Vector3(0, jump_force, 0));            
+            body.AddForce(new Vector3(0, jump_force, 0));
+            cool_down_jump = seconds_between_jumps;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        cool_down_jump -= Time.deltaTime;
     }
 }
 

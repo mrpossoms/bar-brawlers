@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b9c004157761e0fbb66fad48bc486d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walk_force: 1
-  jump_force: 1
 --- !u!1001 &4476242324855842458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21,6 +19,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3195770638990678278, guid: 94a00d08ab20c16eeb6778649d14851b, type: 3}
+      propertyPath: m_Mass
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: 2674795032176798247, guid: 94a00d08ab20c16eeb6778649d14851b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -69,7 +71,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Brawler Player
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2571721954610674353, guid: 94a00d08ab20c16eeb6778649d14851b, type: 3}
+    - {fileID: 6971557853264944737, guid: 94a00d08ab20c16eeb6778649d14851b, type: 3}
+    - {fileID: 1922552140453889193, guid: 94a00d08ab20c16eeb6778649d14851b, type: 3}
+    - {fileID: 1099657935233017200, guid: 94a00d08ab20c16eeb6778649d14851b, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 94a00d08ab20c16eeb6778649d14851b, type: 3}
 --- !u!1 &7833814758716090950 stripped
 GameObject:

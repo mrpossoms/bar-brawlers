@@ -6,13 +6,14 @@ using UnityEngine;
 namespace Actor
 {
 
-public class Player : Brawler
+public class Player : MonoBehaviour
 {
+    Actor.Brawler me;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        me = this.GetComponent<Actor.Brawler>();
     }
 
     // Update is called once per frame
@@ -31,12 +32,12 @@ public class Player : Brawler
 
         if (Input.GetKey("a"))
         {
-            dir += new Vector2(1, 0);
+            dir += new Vector2(-1, 0);
         }
 
         if (Input.GetKey("d"))
         {
-            dir += new Vector2(-1, 0);
+            dir += new Vector2(1, 0);
         }
 
         if (dir.magnitude > 0.0001)
@@ -44,12 +45,12 @@ public class Player : Brawler
             Debug.Log(dir);
         }
 
-        this.GetComponent<Actor.Brawler>().Walk(dir.normalized);
+        me.Walk(dir.normalized);
 
         if (Input.GetKey("space"))
         {
-            this.GetComponent<Actor.Brawler>().Jump();
-        }        
+            me.Jump();
+        }
     }
 }
 
