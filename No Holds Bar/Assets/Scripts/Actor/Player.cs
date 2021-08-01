@@ -1,3 +1,6 @@
+using MLAPI;
+using MLAPI.Messaging;
+using MLAPI.NetworkVariable;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +9,7 @@ using UnityEngine;
 namespace Actor
 {
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     public float max_pickup_distance = 2;
     public float hold_distance = 1.5f;
@@ -18,7 +21,7 @@ public class Player : MonoBehaviour
     float pickups_distance = 0;
 
     // Start is called before the first frame update
-    void Start()
+    public override void NetworkStart()
     {
         me = this.GetComponent<Actor.Brawler>();
         eyes = this.GetComponentInChildren<Camera.Player>();
