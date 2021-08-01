@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1497325215823763076}
   - component: {fileID: 2195508835613957356}
   - component: {fileID: 7900073742403527941}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -171,9 +171,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -5568371526223589888, guid: 887d829b89cc1cb4e821bd3c769ae055, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 887d829b89cc1cb4e821bd3c769ae055, type: 3}
       propertyPath: m_Name
       value: Mug
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 887d829b89cc1cb4e821bd3c769ae055, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3735102090226358198, guid: 887d829b89cc1cb4e821bd3c769ae055, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 7202271454713460447, guid: 887d829b89cc1cb4e821bd3c769ae055, type: 3}
       propertyPath: m_Materials.Array.data[0]
