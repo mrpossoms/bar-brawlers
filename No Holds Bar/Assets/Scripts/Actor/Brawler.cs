@@ -20,7 +20,10 @@ public class Brawler : NetworkBehaviour
     protected Rigidbody body; 
     private float cool_down_jump = 0;
 
-    Rigidbody pickup = null;
+    [SyncVar]
+    GameObject pickup = null;
+    
+    [SyncVar]
     float pickups_distance = 0;
 
     // Start is called before the first frame update
@@ -51,9 +54,10 @@ public class Brawler : NetworkBehaviour
         }
     }
 
-    public Rigidbody Pick()
+    [Command]
+    public void Pick()
     {
-        if (null != pickup) { return pickup; }
+        if (null != pickup) { return; }
 
         int layerMask = LayerMask.GetMask("Pickupables");
         RaycastHit hit;
@@ -65,23 +69,25 @@ public class Brawler : NetworkBehaviour
         {
             if (hit.distance <= max_pickup_distance)
             {
-                pickup = hit.rigidbody;
-                pickup.isKinematic = true;
+                pickup = hit.rigidbody.gameObject;
+                hit.rigidbody.isKinematic = true;
                 pickups_distance = hit.distance;
-                return pickup;
+                // return pickup;
             }
         }
 
-        return null;
+        // return null;
     }
 
+    [Command]
     public void Throw()
     {
         if (null != pickup)
         {
             Debug.Log("throw");
-            pickup.isKinematic = false;
-            pickup.AddForce(transform.forward * throw_force, ForceMode.Force);
+            Rigidbody rb = pickup.GetComponent<Rigidbody>();
+            rb.isKinematic = false;
+            rb.AddForce(transform.forward * throw_force, ForceMode.Force);
             pickup = null;
         }  
     }
@@ -91,8 +97,9 @@ public class Brawler : NetworkBehaviour
     {
         if (null != pickup)
         {
+            Rigidbody rb = pickup.GetComponent<Rigidbody>();
             // pickups_distance += (hold_distance - max_pickup_distance) * Time.deltaTime;
-            pickup.position = EyePosition() + transform.forward * pickups_distance; 
+            rb.position = EyePosition() + transform.forward * pickups_distance; 
         }
 
         cool_down_jump -= Time.deltaTime;
