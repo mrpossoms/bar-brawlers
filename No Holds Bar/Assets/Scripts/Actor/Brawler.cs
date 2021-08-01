@@ -2,18 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Mirror;
 
 namespace Actor
 {
 
-public class Brawler : MonoBehaviour
+public class Brawler : NetworkBehaviour
 {
     protected Rigidbody body; 
     private float cool_down_jump = 0;
 
     public float seconds_between_jumps = 0.1f;
-    public float walk_force = 1000;
-    public float jump_force = 1500;
+    public float walk_force = 200;
+    public float jump_force = 10000;
 
     // Start is called before the first frame update
     void Start()
