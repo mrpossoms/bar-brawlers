@@ -27,6 +27,19 @@ CapsuleCollider:
   m_Height: 0.5572905
   m_Direction: 2
   m_Center: {x: 0.000094474264, y: 0.00008480915, z: -0.24991277}
+--- !u!65 &6717773795624041502
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3553889150646688137}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.007063023, y: 0.007363745, z: 0.032708492}
+  m_Center: {x: -0.00007493756, y: -0.000026694628, z: -0.5104089}
 --- !u!1 &4308762326403609714
 GameObject:
   m_ObjectHideFlags: 0
