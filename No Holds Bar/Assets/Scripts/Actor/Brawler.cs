@@ -13,8 +13,8 @@ public class Brawler : NetworkBehaviour
     private float cool_down_jump = 0;
 
     public float seconds_between_jumps = 0.1f;
-    public float walk_force = 200;
-    public float jump_force = 10000;
+    private float walk_force = 200;
+    private float jump_force = 10000;
 
     // Start is called before the first frame update
     void Start()
