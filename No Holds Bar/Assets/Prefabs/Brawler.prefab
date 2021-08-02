@@ -52,6 +52,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   seconds_between_jumps: 0.1
+  air_movement_control: 0.25
   max_pickup_distance: 2
   hold_distance: 1.5
   throw_force: 10
@@ -140,6 +141,18 @@ MonoBehaviour:
   interpolateRotation: 1
   interpolateScale: 1
   syncScale: 1
+--- !u!114 &6056051107411194462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1870502783222983313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce2278c8a337544f983af51738f6da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7307342280722292390
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -197,10 +210,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8979536952676561975, guid: 0d79204046abd4c49b61c1bd053f8c61, type: 3}
       propertyPath: m_Name
-      value: SkeletonWarrior_II
+      value: Body
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0d79204046abd4c49b61c1bd053f8c61, type: 3}
+--- !u!1 &1870502783222983313 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8979536952676561975, guid: 0d79204046abd4c49b61c1bd053f8c61, type: 3}
+  m_PrefabInstance: {fileID: 7307342280722292390}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1350671910942470187 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8635205767755460237, guid: 0d79204046abd4c49b61c1bd053f8c61, type: 3}
