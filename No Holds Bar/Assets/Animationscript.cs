@@ -5,63 +5,58 @@ using UnityEngine;
 public class Animationscript : MonoBehaviour
 {
     Animator animator;
+    Rigidbody body;
+    Actor.Brawler me;
+    string anim_name = "isIdle";
     // Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
+        body = GetComponentInParent<Rigidbody>();
+        me = GetComponentInParent<Actor.Brawler>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("w"))
+        string last_anim_name = anim_name;
+
+        if (me.IsAirborn())
         {
-            animator.SetBool("isWalking", true);
+            anim_name = "isJump";
+        }
+        else if (body.velocity.magnitude > 0.1)
+        {
+            Vector3 nv = body.velocity.normalized;
+            if (Vector3.Dot(nv, body.transform.forward) > 0.5)
+            {
+                anim_name = "isWalking";
+            }
+            else if (Vector3.Dot(nv, body.transform.forward) < -0.5)
+            {
+                anim_name = "isBackWalking";
+            }
+
+            if (Vector3.Dot(nv, body.transform.right) < -0.5)
+            {
+                anim_name = "isLeft";
+            }
+            else if (Vector3.Dot(nv, body.transform.right) > 0.5)
+            {
+                anim_name = "isRight";
+            }
+        }
+        else
+        {
+            anim_name = "isIdle";
         }
 
-        if (!Input.GetKey("w"))
+        if (anim_name != last_anim_name)
         {
-            animator.SetBool("isWalking", false);
+            animator.SetBool(last_anim_name, false);
         }
 
-        if (Input.GetKey("s"))
-        {
-            animator.SetBool("isBackWalking", true);
-        }
-
-        if (!Input.GetKey("s"))
-        {
-            animator.SetBool("isBackWalking", false);
-        }
-        if (Input.GetKey("a"))
-        {
-            animator.SetBool("isLeft", true);
-        }
-
-        if (!Input.GetKey("a"))
-        {
-            animator.SetBool("isLeft", false);
-        }
-        if (Input.GetKey("d"))
-        {
-            animator.SetBool("isRight", true);
-        }
-
-        if (!Input.GetKey("d"))
-        {
-            animator.SetBool("isRight", false);
-        }
-
-        if (Input.GetKey("space"))
-        {
-            animator.SetBool("isJump", true);
-        }
-
-        if (!Input.GetKey("space"))
-        {
-            animator.SetBool("isJump", false);
-        }
-
+        animator.SetBool(anim_name, true);
     }
 
 

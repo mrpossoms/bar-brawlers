@@ -140,21 +140,6 @@ public class Brawler : NetworkBehaviour
         }  
     }
 
-
-    void selectAnimations()
-    {
-        float speed = walkingSpeed();
-        if (speed > is_walking_speed_threshold)
-        {
-            // Walking here
-        }
-        else
-        {
-            // Standing here (possibly falling)
-        }
-    }
-
-
     // Update is called once per frame
     void Update()
     {
@@ -166,8 +151,6 @@ public class Brawler : NetworkBehaviour
         }
 
         Debug.DrawRay(EyePosition(), lookDirection() * 10, Color.yellow, 1, true);
-
-        selectAnimations();
 
         cool_down_jump -= Time.deltaTime;
     }
