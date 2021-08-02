@@ -9,6 +9,7 @@ namespace Actor
 
 public class Player : NetworkBehaviour
 {
+       
 
     Actor.Brawler me;
 
@@ -16,6 +17,7 @@ public class Player : NetworkBehaviour
     void Start()
     {
         me = this.GetComponent<Actor.Brawler>();
+           
     }
 
     public override void OnStartLocalPlayer()
@@ -57,6 +59,7 @@ public class Player : NetworkBehaviour
         if (Input.GetKey("w"))
         {
             dir += new Vector2(0, 1);
+               
         }
 
         if (Input.GetKey("s"))
