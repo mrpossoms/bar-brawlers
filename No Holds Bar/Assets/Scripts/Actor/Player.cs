@@ -23,7 +23,7 @@ public class Player : NetworkBehaviour
     public override void OnStartLocalPlayer()
     {
         Camera.main.transform.SetParent(transform);
-        Camera.main.transform.localPosition = new Vector3(0, 2, 0);
+        Camera.main.transform.localPosition = new Vector3(0, 1.8f, 0);
     
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
@@ -40,11 +40,13 @@ public class Player : NetworkBehaviour
             float dx = Input.GetAxis("Mouse X");
             float dy = Input.GetAxis("Mouse Y");
 
-            Rigidbody parent_body = gameObject.GetComponentInParent(typeof(Rigidbody)) as Rigidbody;
-            if (null != parent_body)
-            {
-                parent_body.transform.eulerAngles -= (new Vector3(dy, -dx, 0));
-            }
+            me.lookTilt(dx, dy);
+            // Rigidbody parent_body = gameObject.GetComponentInParent(typeof(Rigidbody)) as Rigidbody;
+            // if (null != parent_body)
+            // {
+            //     Camera.main.transform.eulerAngles -= (new Vector3(dy, 0, 0));
+            //     parent_body.transform.eulerAngles -= (new Vector3(0, -dx, 0));
+            // }
         }
 
         if (Input.GetKey("escape"))
