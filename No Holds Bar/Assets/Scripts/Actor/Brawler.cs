@@ -22,7 +22,9 @@ public class Brawler : NetworkBehaviour
 
     protected Rigidbody body; 
     private float cool_down_jump = 0;
-    private Vector3 look_eulers;
+
+    [SyncVar]
+    private Vector3 look_eulers = new Vector3(0, 0, 0);
 
     [SyncVar]
     GameObject pickup = null;
@@ -62,11 +64,18 @@ public class Brawler : NetworkBehaviour
         return q * Vector3.forward;
     }
 
+    [Command]
+    void submitLook(Vector3 e)
+    {
+        look_eulers = e;
+    }
+
     public void lookTilt(float d_yaw, float d_pitch)
     {
         look_eulers -= (new Vector3(d_pitch, -d_yaw, 0));
         Camera.main.transform.eulerAngles = new Vector3(look_eulers.x, look_eulers.y, 0);
         this.gameObject.transform.eulerAngles = new Vector3(0, look_eulers.y, 0);
+        submitLook(look_eulers);
     }
 
     public void Walk(Vector2 dir)
@@ -155,6 +164,8 @@ public class Brawler : NetworkBehaviour
             // pickups_distance += (hold_distance - max_pickup_distance) * Time.deltaTime;
             rb.position = HandPosition() + lookDirection() * pickups_distance; 
         }
+
+        Debug.DrawRay(EyePosition(), lookDirection() * 10, Color.yellow, 1, true);
 
         selectAnimations();
 
