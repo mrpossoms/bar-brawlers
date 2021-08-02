@@ -10,12 +10,13 @@ namespace Actor
 public class Brawler : NetworkBehaviour
 {
     public float seconds_between_jumps = 0.1f;
-    private float walk_force = 200;
-    private float jump_force = 10000;
+    private float walk_force = 5;
+    private float jump_force = 250;
+    public float air_movement_control = 0.25f;
 
     public float max_pickup_distance = 2;
     public float hold_distance = 1.5f;
-    public float throw_force = 1000.0f;
+    public float throw_force = 20.0f;
 
     public float is_walking_speed_threshold = 0.1f;
 
@@ -39,6 +40,11 @@ public class Brawler : NetworkBehaviour
         return gameObject.transform.position + gameObject.transform.up * 2;    
     }
 
+    public bool IsAirborn()
+    {
+        return !Physics.Raycast(transform.position, -Vector3.up, 0.1f);
+    }
+
     public float walkingSpeed()
     {
         return (new Vector3(body.velocity.x, 0, body.velocity.z)).magnitude;
@@ -49,16 +55,21 @@ public class Brawler : NetworkBehaviour
         float yaw = this.gameObject.transform.eulerAngles.y;//body.transform.eulerAngles.x;
         Vector3 force = Quaternion.AngleAxis(yaw, Vector3.up) * (new Vector3(dir.x, 0, dir.y) * walk_force);
      
-        Debug.Log("Walking " + force);
+        if (IsAirborn())
+        {
+            force *= air_movement_control;
+        }
 
-        body.AddForce(force, ForceMode.Force);
+        print("Walking " + force);
+
+        body.AddForce(force, ForceMode.Impulse);
     }
 
     public void Jump()
     {
         if (Math.Abs(body.velocity.y) < 0.0001 && cool_down_jump <= 0)
         {
-            body.AddForce(new Vector3(0, jump_force, 0));
+            body.AddForce(new Vector3(0, jump_force, 0), ForceMode.Impulse);
             cool_down_jump = seconds_between_jumps;
         }
     }
@@ -96,7 +107,7 @@ public class Brawler : NetworkBehaviour
             Debug.Log("throw");
             Rigidbody rb = pickup.GetComponent<Rigidbody>();
             rb.isKinematic = false;
-            rb.AddForce(transform.forward * throw_force, ForceMode.Force);
+            rb.AddForce(transform.forward * throw_force, ForceMode.Impulse);
             pickup = null;
         }  
     }

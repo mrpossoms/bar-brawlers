@@ -52,6 +52,10 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   seconds_between_jumps: 0.1
+  max_pickup_distance: 2
+  hold_distance: 1.5
+  throw_force: 10
+  is_walking_speed_threshold: 0.1
 --- !u!114 &-673846153387346076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,9 +70,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  max_pickup_distance: 2
-  hold_distance: 1.5
-  throw_force: 1000
 --- !u!54 &-3195770638990678278
 Rigidbody:
   m_ObjectHideFlags: 0
