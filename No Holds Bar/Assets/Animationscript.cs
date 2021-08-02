@@ -25,7 +25,7 @@ public class Animationscript : MonoBehaviour
         {
             anim_name = "isJump";
         }
-        else if (body.velocity.magnitude > 0.1)
+        else if (body.velocity.magnitude > 0.01)
         {
             Vector3 nv = body.velocity.normalized;
             if (Vector3.Dot(nv, body.transform.forward) > 0.5)
