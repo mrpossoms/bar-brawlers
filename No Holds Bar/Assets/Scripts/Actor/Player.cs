@@ -72,7 +72,13 @@ public class Player : NetworkBehaviour
             dir += new Vector2(1, 0);
         }
 
-        me.Walk(dir.normalized);
+        float mag = dir.magnitude;
+        if (mag > 0)
+        {
+            dir /= mag;
+        }
+
+        me.Walk(dir);
 
         bool mouse_right = Input.GetMouseButton(1);
         bool mouse_left = Input.GetMouseButton(0);

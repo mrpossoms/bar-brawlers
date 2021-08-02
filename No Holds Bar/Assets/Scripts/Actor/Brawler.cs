@@ -17,6 +17,8 @@ public class Brawler : NetworkBehaviour
     public float hold_distance = 1.5f;
     public float throw_force = 1000.0f;
 
+    public float is_walking_speed_threshold = 0.1f;
+
     protected Rigidbody body; 
     private float cool_down_jump = 0;
 
@@ -37,11 +39,18 @@ public class Brawler : NetworkBehaviour
         return gameObject.transform.position + gameObject.transform.up * 2;    
     }
 
+    public float walkingSpeed()
+    {
+        return (new Vector3(body.velocity.x, 0, body.velocity.z)).magnitude;
+    }
+
     public void Walk(Vector2 dir)
     {
         float yaw = this.gameObject.transform.eulerAngles.y;//body.transform.eulerAngles.x;
         Vector3 force = Quaternion.AngleAxis(yaw, Vector3.up) * (new Vector3(dir.x, 0, dir.y) * walk_force);
      
+        Debug.Log("Walking " + force);
+
         body.AddForce(force, ForceMode.Force);
     }
 
@@ -92,6 +101,21 @@ public class Brawler : NetworkBehaviour
         }  
     }
 
+
+    void selectAnimations()
+    {
+        float speed = walkingSpeed();
+        if (speed > is_walking_speed_threshold)
+        {
+            // Walking here
+        }
+        else
+        {
+            // Standing here (possibly falling)
+        }
+    }
+
+
     // Update is called once per frame
     void Update()
     {
@@ -101,6 +125,8 @@ public class Brawler : NetworkBehaviour
             // pickups_distance += (hold_distance - max_pickup_distance) * Time.deltaTime;
             rb.position = EyePosition() + transform.forward * pickups_distance; 
         }
+
+        selectAnimations();
 
         cool_down_jump -= Time.deltaTime;
     }
