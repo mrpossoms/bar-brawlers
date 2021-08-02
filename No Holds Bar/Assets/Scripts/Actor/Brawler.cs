@@ -22,6 +22,7 @@ public class Brawler : NetworkBehaviour
 
     protected Rigidbody body; 
     private float cool_down_jump = 0;
+    private Vector3 look_eulers;
 
     [SyncVar]
     GameObject pickup = null;
@@ -37,7 +38,12 @@ public class Brawler : NetworkBehaviour
 
     public Vector3 EyePosition()
     {
-        return gameObject.transform.position + gameObject.transform.up * 2;    
+        return gameObject.transform.position + Camera.main.transform.localPosition;    
+    }
+
+    public Vector3 HandPosition()
+    {
+        return gameObject.transform.position + Camera.main.transform.localPosition - (new Vector3(0, 0.25f, 0));    
     }
 
     public bool IsAirborn()
@@ -48,6 +54,19 @@ public class Brawler : NetworkBehaviour
     public float walkingSpeed()
     {
         return (new Vector3(body.velocity.x, 0, body.velocity.z)).magnitude;
+    }
+
+    public Vector3 lookDirection()
+    {
+        Quaternion q = Quaternion.Euler(look_eulers);
+        return q * Vector3.forward;
+    }
+
+    public void lookTilt(float d_yaw, float d_pitch)
+    {
+        look_eulers -= (new Vector3(d_pitch, -d_yaw, 0));
+        Camera.main.transform.eulerAngles = new Vector3(look_eulers.x, look_eulers.y, 0);
+        this.gameObject.transform.eulerAngles = new Vector3(0, look_eulers.y, 0);
     }
 
     public void Walk(Vector2 dir)
@@ -85,7 +104,7 @@ public class Brawler : NetworkBehaviour
         // Debug.DrawRay(transform.position, eyes.transform.forward * 10, Color.yellow, 10, true);
 
         // Does the ray intersect any objects excluding the player layer
-        if (Physics.Raycast(EyePosition(), transform.forward, out hit, Mathf.Infinity, layerMask))
+        if (Physics.Raycast(EyePosition(), lookDirection(), out hit, Mathf.Infinity, layerMask))
         {
             if (hit.distance <= max_pickup_distance)
             {
@@ -107,7 +126,7 @@ public class Brawler : NetworkBehaviour
             Debug.Log("throw");
             Rigidbody rb = pickup.GetComponent<Rigidbody>();
             rb.isKinematic = false;
-            rb.AddForce(transform.forward * throw_force, ForceMode.Impulse);
+            rb.AddForce(lookDirection() * throw_force, ForceMode.Impulse);
             pickup = null;
         }  
     }
@@ -134,7 +153,7 @@ public class Brawler : NetworkBehaviour
         {
             Rigidbody rb = pickup.GetComponent<Rigidbody>();
             // pickups_distance += (hold_distance - max_pickup_distance) * Time.deltaTime;
-            rb.position = EyePosition() + transform.forward * pickups_distance; 
+            rb.position = HandPosition() + lookDirection() * pickups_distance; 
         }
 
         selectAnimations();
